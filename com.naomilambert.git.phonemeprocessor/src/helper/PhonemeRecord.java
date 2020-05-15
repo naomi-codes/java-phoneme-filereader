@@ -19,131 +19,182 @@ import phonemes.Phoneme;
  */
 public class PhonemeRecord 
 {
-    private static List<Phoneme> foundPhonemes;
+	// CONSTANTS TO HOLD PHONEMES BY TYPE
 
-    private static final String[] AFFRICATIVES = {"jh", "ch"};
-    private static final String[] CLOSURES = {"bcl", "dcl", "gcl", "pcl", "tck", "kcl", "tcl"};
-    private static final String[] FRICATIVES = {"s", "sh", "z", "zh", "f", "th", "v", "dh"};
-    private static final String[] SEMIVOWELS = {"l", "r", "w", "y", "hh", "hv", "el"};
-    private static final String[] NASALS = {"m", "n", "ng", "em", "en", "eng", "nx"};
-    private static final String[] STOPS = {"b", "d", "g", "p", "t", "k", "dx", "q"};
-    private static final String[] OTHERS = {"pau", "epi", "h#", "1", "2"};
-    private static final String[] VOWELS = {"iy", "ih", "eh", "ey", "ae", "aa", "aw", "ay", "ah", "ao", "oy", "ow", 
-            "uh", "uw", "ux", "er", "ax", "ix", "axr", "ax-r"};
+	private static final String[] AFFRICATIVES = {"jh", "ch"};
+	private static final String[] CLOSURES = {"bcl", "dcl", "gcl", "pcl", "tck", "kcl", "tcl"};
+	private static final String[] FRICATIVES = {"s", "sh", "z", "zh", "f", "th", "v", "dh"};
+	private static final String[] SEMIVOWELS = {"l", "r", "w", "y", "hh", "hv", "el"};
+	private static final String[] NASALS = {"m", "n", "ng", "em", "en", "eng", "nx"};
+	private static final String[] STOPS = {"b", "d", "g", "p", "t", "k", "dx", "q"};
+	private static final String[] OTHERS = {"pau", "epi", "h#", "1", "2"};
+	private static final String[] VOWELS = {"iy", "ih", "eh", "ey", "ae", "aa", "aw", "ay", "ah", "ao", "oy", "ow", 
+			"uh", "uw", "ux", "er", "ax", "ix", "axr", "ax-r"};
 
+	// List to hold all phonemes found in the file
+	private static List<Phoneme> foundPhonemes;
 
-    /**
-     * Adds a previously validated phoneme to the list of all 
-     * found phonemes
-     * @param p
-     */
-    public static void addPhoneme (Phoneme phoneme) {
-        foundPhonemes.add(phoneme);
+	/**
+	 * Adds a previously validated phoneme to the list of all 
+	 * found phonemes
+	 * @param phoneme 
+	 */
+	public static void addPhoneme (Phoneme phoneme) {
+		foundPhonemes.add(phoneme);
 
-    }//addPhoneme
+	}//addPhoneme
 
-    public static List<Phoneme> getPhonemes () {
-        return foundPhonemes;
-    }//getPhonemes
+	/**
+	 * Returns the list of all found phonemes
+	 * @return
+	 */
+	public static List<Phoneme> getPhonemes () {
+		return PhonemeRecord.foundPhonemes;
+	}//getPhonemes
 
-    public static String findType(String pho) {
-        String type = "not found";
-        if (isAffricative(pho)) type = "affricative";
-        if (isClosure(pho)) type = "closure";
-        if (isStop(pho)) type = "stop";
-        if (isVowel(pho)) type = "vowel";
-        if (isSemivowel(pho)) type = "semivowel";
-        if (isFricative(pho)) type = "fricative";
-        if (isNasal(pho)) type = "nasal";
-        if (isOther(pho)) type = "other";
-        return type;
-    } // findPhonemeType
+	/**
+	 * Takes the read in phoneme and finds its matching type if there is one
+	 * @param phoneme
+	 * @return
+	 */
+	public static String findType(String phoneme) {
+		String type = null;
+		if (isAffricative(phoneme)) type = "affricative";
+		if (isClosure(phoneme)) type = "closure";
+		if (isStop(phoneme)) type = "stop";
+		if (isVowel(phoneme)) type = "vowel";
+		if (isSemivowel(phoneme)) type = "semivowel";
+		if (isFricative(phoneme)) type = "fricative";
+		if (isNasal(phoneme)) type = "nasal";
+		if (isOther(phoneme)) type = "other";
+		return type;
+	} // findPhonemeType
 
-    public static boolean isAffricative(String ph) {
-        boolean found = false;
+	/**
+	 * Checks if the phoneme is an affricative
+	 * @param phoneme
+	 * @return boolean
+	 */
+	public static boolean isAffricative(String phoneme) {
+		boolean found = false;
 
-        for (int i = 0; i < affricatives.length; i++){
-            if (affricatives[i].equals(ph))
-                found = true;       
-        }
+		for (int i = 0; i < AFFRICATIVES.length; i++){
+			if (AFFRICATIVES[i].equals(phoneme))
+				found = true;       
+		}
 
-        return found;
-    } // iswAffricative
+		return found;
+	} // iswAffricative
 
-    public static boolean isClosure(String ph) {
-        boolean found = false;
+	/**
+	 * Checks if the phoneme is a closure
+	 * @param phoneme
+	 * @return
+	 */
+	public static boolean isClosure(String phoneme) {
+		boolean found = false;
 
-        for (int i = 0; i < closures.length; i++){
-            if (closures[i].equals(ph))
-                found = true;       
-        }
+		for (int i = 0; i < CLOSURES.length; i++){
+			if (CLOSURES[i].equals(phoneme))
+				found = true;       
+		}
 
-        return found;
-    } // isClosure
+		return found;
+	} // isClosure
 
-    public static boolean isFricative(String ph) {
-        boolean found = false;
+	/**
+	 * Checks if the phoneme is a fricative
+	 * @param phoneme
+	 * @return
+	 */
+	public static boolean isFricative(String phoneme) {
+		boolean found = false;
 
-        for (int i = 0; i < fricatives.length; i++){
-            if (fricatives[i].equals(ph))
-                found = true;       
-        }
+		for (int i = 0; i < FRICATIVES.length; i++){
+			if (FRICATIVES[i].equals(phoneme))
+				found = true;       
+		}
 
-        return found;
-    } // isFricative
+		return found;
+	} // isFricative
 
-    public static boolean isSemivowel(String ph) {
-        boolean found = false;
+	/**
+	 * Checks if the phoneme is a semivowel
+	 * @param phoneme
+	 * @return
+	 */
+	public static boolean isSemivowel(String phoneme) {
+		boolean found = false;
 
-        for (int i = 0; i < semivowels.length; i++){
-            if (semivowels[i].equals(ph))
-                found = true;       
-        }
+		for (int i = 0; i < SEMIVOWELS.length; i++){
+			if (SEMIVOWELS[i].equals(phoneme))
+				found = true;       
+		}
 
-        return found;
-    } // isSemivowel
+		return found;
+	} // isSemivowel
 
-    public static boolean isNasal(String ph) {
-        boolean found = false;
+	/**
+	 * Checks if the phoneme is a nasal
+	 * @param phoneme
+	 * @return
+	 */
+	public static boolean isNasal(String phoneme) {
+		boolean found = false;
 
-        for (int i = 0; i < nasals.length; i++){
-            if (nasals[i].equals(ph))
-                found = true;       
-        }
+		for (int i = 0; i < NASALS.length; i++){
+			if (NASALS[i].equals(phoneme))
+				found = true;       
+		}
 
-        return found;
-    } // isNasal
+		return found;
+	} // isNasal
 
-    public static boolean isStop(String ph) {
-        boolean found = false;
+	/**
+	 * Checks if the phoneme is a stop
+	 * @param phoneme
+	 * @return
+	 */
+	public static boolean isStop(String phoneme) {
+		boolean found = false;
 
-        for (int i = 0; i < stops.length; i++){
-            if (stops[i].equals(ph))
-                found = true;       
-        }
+		for (int i = 0; i < STOPS.length; i++){
+			if (STOPS[i].equals(phoneme))
+				found = true;       
+		}
 
-        return found;
-    } //isStop
+		return found;
+	} //isStop
 
-    public static boolean isVowel(String ph) {
-        boolean found = false;
+	/**
+	 * Checks if the phoneme is a vowel
+	 * @param phoneme
+	 * @return
+	 */
+	public static boolean isVowel(String phoneme) {
+		boolean found = false;
 
-        for (int i = 0; i < vowels.length; i++){
-            if (vowels[i].equals(ph))
-                found = true;       
-        }
+		for (int i = 0; i < VOWELS.length; i++){
+			if (VOWELS[i].equals(phoneme))
+				found = true;       
+		}
 
-        return found;
-    } //isVowel
+		return found;
+	} //isVowel
 
-    public static boolean isOther(String ph) {
-        boolean found = false;
+	/**
+	 * Checks if the phoneme is an other
+	 * @param phoneme
+	 * @return
+	 */
+	public static boolean isOther(String phoneme) {
+		boolean found = false;
 
-        for (int i = 0; i < others.length; i++) {
-            if (others[i].equals(ph))
-                found = true;
-        }
+		for (int i = 0; i < OTHERS.length; i++) {
+			if (OTHERS[i].equals(phoneme))
+				found = true;
+		}
 
-        return found;
-    }
+		return found;
+	}
 }

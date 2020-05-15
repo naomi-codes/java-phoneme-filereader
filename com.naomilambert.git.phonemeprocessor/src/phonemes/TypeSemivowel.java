@@ -9,7 +9,6 @@ package phonemes;
 public class TypeSemivowel extends Phoneme
 {
 	private static String NAME = "Semivowel";
-	//private static String NAME = "Se";
 	
     private static int count = 0;
 

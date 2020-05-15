@@ -9,7 +9,7 @@ import phonemes.TypeAffricative;
 import phonemes.TypeClosure;
 import phonemes.TypeFricative;
 import phonemes.TypeNasal;
-import phonemes.TypeOthers;
+import phonemes.TypeOther;
 import phonemes.TypeSemivowel;
 import phonemes.TypeStop;
 import phonemes.TypeVowel;
@@ -52,7 +52,7 @@ public class PhonemeFileProcessor
 	{
 
 		String outputFilenameStem = null; 
-		
+
 		// if argument length is not acceptable...
 		if (args.length < 2 || args.length > 4) {
 			System.out.println("2 or 4 arguments expected");
@@ -70,7 +70,7 @@ public class PhonemeFileProcessor
 					System.out.println("IOException: File not found - " + e.getMessage());
 					doShutdown();
 				}
-				
+
 				outputFilenameStem = args[1];
 
 			} else {
@@ -115,10 +115,8 @@ public class PhonemeFileProcessor
 		// read the specified input file
 		readFile();
 
-		// set output files for printers
-		Printer.setPrinters(outputFilenameStem);
 		// print the found phonemes
-		Printer.print(sampleRate);
+		Printer.print(sampleRate, outputFilenameStem);
 
 	}//main
 
@@ -182,7 +180,7 @@ public class PhonemeFileProcessor
 						// ...retrieve the start and end sample nos from the tokens
 						int startSampleNo = Integer.parseInt(tokens[0].trim());
 						int endSampleNo = Integer.parseInt(tokens[1].trim() );
-						
+
 						// retrieve the phoneme from the tokens and find its type
 						String type = PhonemeRecord.findType(tokens[2]);
 
@@ -211,72 +209,63 @@ public class PhonemeFileProcessor
 							case "vowel":
 								PhonemeRecord.addPhoneme(new TypeVowel(startSampleNo, endSampleNo, type));
 								break;
-							case "others":
-								PhonemeRecord.addPhoneme(new TypeOthers(startSampleNo, endSampleNo, type));
+							case "other":
+								PhonemeRecord.addPhoneme(new TypeOther(startSampleNo, endSampleNo, type));
 								break;
 							default: 
-								System.out.println("No such type: " + type + " Line skipped.");
+								System.out.println("No matching type found. Line skipped.");
 							}
-						} else { // if the sample nos are invalid
-							System.out.println("Invalid sample nos: " + startSampleNo + ", " + endSampleNo);
+						} 
+					} 
+				}
+			}  		
+		// close the scanner
+		in.close();
+	} else { // ... 
+		System.out.println("Scanner has not been initialised.");
+		doShutdown();
+	}
+}
 
-						}
 
-					} else {
-						System.out.println("Invalid phoneme: " + tokens[2]);
-					}
-				} else {
-					System.out.println("Invalid number of tokens. Line skipped.");
-				}   		
-			}
+/**
+ * 
+ * Checks whether or not the sample numbers read in from
+ * a line of the input file are valid
+ * @param startNo
+ * @param endNo
+ * @return
+ */
+private static boolean isValidStartEnd(String startNo, String endNo) {
 
-			// close the scanner
-			in.close();
-		} else { // ... 
-			System.out.println("Scanner has not been initialised.");
-			doShutdown();
-		}
+	try {
+		Integer.valueOf(startNo);
+		Integer.valueOf(endNo);
+		return true;
+
+	} catch (NumberFormatException e) {
+		System.out.println("Invalid sample nos. Line skipped.");
 	}
 
-	
-	/**
-	 * 
-	 * Checks whether or not the sample numbers read in from
-	 * a line of the input file are valid
-	 * @param startNo
-	 * @param endNo
-	 * @return
-	 */
-	private static boolean isValidStartEnd(String startNo, String endNo) {
+	return false;
+}
 
-		try {
-			Integer.valueOf(startNo);
-			Integer.valueOf(endNo);
-			return true;
+/**
+ * Checks whether or not the phoneme read from the last line is
+ * recognised
+ * @param type
+ * @return
+ */
+private static boolean isValidPhoneme(String type) {
+	if (!(PhonemeRecord.findType(type) == null)) return true;  
+	return false;
+}
 
-		} catch (NumberFormatException e) {
-			System.out.println("Invalid sample nos. Line skipped.");
-		}
-
-		return false;
-	}
-
-	/**
-	 * Checks whether or not the phoneme read from the last line is
-	 * recognised
-	 * @param type
-	 * @return
-	 */
-	private static boolean isValidPhoneme(String type) {
-		if (!(PhonemeRecord.findType(type).equals("not found"))) return true;  
-		return false;
-	}
-
-	/**
-	 * Output command line usage
-	 */
-	public static void usage(){
-		System.out.println("Usage: java Command [-s] [samplerate] input_file output_file_stem");
-	}//usage
+/**
+ * Output command line usage
+ */
+public static void usage(){
+	System.out.println("Usage: java Command [-s] [samplerate] input_file output_file_stem");
+}//usage
 }
 
