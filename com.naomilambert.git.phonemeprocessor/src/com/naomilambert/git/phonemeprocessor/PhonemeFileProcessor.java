@@ -150,7 +150,6 @@ public class PhonemeFileProcessor
 
 	/**
 	 * 
-	 * Reads in phonemes to the scanner initiliased with the the input
 	 * Reads in phonemes to the scanner initialised with the the input
 	 * file as a parameter. For each phoneme read in a new object is created 
 	 * which stores the start and end sample numbers and the phoneme name.
