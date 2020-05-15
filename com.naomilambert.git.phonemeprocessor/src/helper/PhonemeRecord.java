@@ -1,5 +1,6 @@
 package helper;
 
+import java.util.ArrayList;
 import java.util.List;
 
 // package imports
@@ -32,7 +33,7 @@ public class PhonemeRecord
 			"uh", "uw", "ux", "er", "ax", "ix", "axr", "ax-r"};
 
 	// List to hold all phonemes found in the file
-	private static List<Phoneme> foundPhonemes;
+	private static List<Phoneme> foundPhonemes = new ArrayList<Phoneme>();
 
 	/**
 	 * Adds a previously validated phoneme to the list of all 

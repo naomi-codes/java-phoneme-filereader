@@ -19,17 +19,66 @@ import phonemes.TypeVowel;
 import java.io.*;
 
 /**
- * Write a description of class Printer here.
+ * Static printer used to print found phonemes to files grouping them by type
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @author Naomi Lambert
+ * @version 15 May 2020
  */
 public class Printer
 {
 
-	private static PrintWriter printer = null;
+	private static PrintWriter affricativePrinter = null;
+	private static PrintWriter fricativePrinter = null;
+	private static PrintWriter closurePrinter = null;
+	private static PrintWriter nasalPrinter = null;
+	private static PrintWriter vowelPrinter = null;
+	private static PrintWriter semivowelPrinter = null;
+	private static PrintWriter stopPrinter = null;
+	private static PrintWriter otherPrinter = null;
+	
 
-
+	public static void setPrinters(String outputFilenameStem) {
+		try {
+			affricativePrinter = new PrintWriter(outputFilenameStem + "Affricatives.txt");
+		} catch (FileNotFoundException e0) {
+			System.out.println("IOException: Affricatives.txt  not openable - " + e0.getMessage());
+		}
+		try {
+			closurePrinter = new PrintWriter(outputFilenameStem + "Closures.txt");
+		} catch (FileNotFoundException e1) {
+			System.out.println("IOException: Affricatives.txt  not openable - " + e1.getMessage());
+		}
+		try {
+			fricativePrinter = new PrintWriter(outputFilenameStem + "Fricatives.txt");
+		} catch (FileNotFoundException e2) {
+			System.out.println("IOException: Affricatives.txt  not openable - " + e2.getMessage());
+		}
+		try {
+			nasalPrinter = new PrintWriter(outputFilenameStem + "Nasals.txt");
+		} catch (FileNotFoundException e3) {
+			System.out.println("IOException: Affricatives.txt  not openable - " + e3.getMessage());
+		}
+		try {
+			vowelPrinter = new PrintWriter(outputFilenameStem + "Vowels.txt");
+		} catch (FileNotFoundException e4) {
+			System.out.println("IOException: Affricatives.txt  not openable - " + e4.getMessage());
+		}
+		try {
+			semivowelPrinter = new PrintWriter(outputFilenameStem + "Semivowels.txt");
+		} catch (FileNotFoundException e5) {
+			System.out.println("IOException: Affricatives.txt  not openable - " + e5.getMessage());
+		}
+		try {
+			stopPrinter = new PrintWriter(outputFilenameStem + "Stops.txt");
+		} catch (FileNotFoundException e6) {
+			System.out.println("IOException: Affricatives.txt  not openable - " + e6.getMessage());
+		}
+		try {
+			otherPrinter = new PrintWriter(outputFilenameStem + "Other.txt");
+		} catch (FileNotFoundException e7) {
+			System.out.println("IOException: Affricatives.txt  not openable - " + e7.getMessage());
+		}
+	}
 	/**
 	 * Prints phonemes of each type from a list of all found phonemes
 	 * to their respective files
@@ -37,104 +86,79 @@ public class Printer
 	 * @param sampleRate
 	 * @param outputFilenameStem
 	 */
-	public static void print (int sampleRate, String outputFilenameStem) {
-		List<Phoneme> ps = PhonemeRecord.getPhonemes();
+	public static void print (int sampleRate) {
+		List<Phoneme> phonemes = PhonemeRecord.getPhonemes();
 
-		ListIterator<Phoneme> iter = ps.listIterator();
+		ListIterator<Phoneme> iter = phonemes.listIterator();
 		while(iter.hasNext())
 		{
 			Phoneme phoneme = iter.next();
 
 			switch (phoneme.getType()) {
 			case "affricative":
-				try {
-					printer = new PrintWriter(outputFilenameStem + "Affricatives.txt");
-				} catch (FileNotFoundException e0) {
-					System.out.println("IOException: Affricatives.txt  not openable - " + e0.getMessage());
-				}
-				printer.printf("%-10s%10s%10s", phoneme.getStartSampleNo()/sampleRate + "s",
+				
+				affricativePrinter.printf("%-10s%10s%10s", phoneme.getStartSampleNo()/sampleRate + "s",
 						phoneme.getEndSampleNo()/sampleRate+"s", phoneme.getName() + "\n");
-				printer.flush();
+				affricativePrinter.flush();
 				break;
 			case "closure":
-				try {
-					printer = new PrintWriter(outputFilenameStem + "Closures.txt");
-				} catch (FileNotFoundException e1) {
-					System.out.println("IOException: Affricatives.txt  not openable - " + e1.getMessage());
-				}
-				printer.printf("%-10s%10s%10s", phoneme.getStartSampleNo() /sampleRate+"s", 
+				
+				closurePrinter.printf("%-10s%10s%10s", phoneme.getStartSampleNo() /sampleRate+"s", 
 						phoneme.getEndSampleNo()/sampleRate+"s", phoneme.getName() + "\n");
-				printer.flush();
+				closurePrinter.flush();
 				break;
 			case "fricative":
-				try {
-					printer = new PrintWriter(outputFilenameStem + "Fricatives.txt");
-				} catch (FileNotFoundException e2) {
-					System.out.println("IOException: Affricatives.txt  not openable - " + e2.getMessage());
-				}
-				printer.printf("%-10s%10s%10s", phoneme.getStartSampleNo()/sampleRate+"s", 
+				
+				fricativePrinter.printf("%-10s%10s%10s", phoneme.getStartSampleNo()/sampleRate+"s", 
 						phoneme.getEndSampleNo()/sampleRate+"s", phoneme.getName() + "\n");  
-				printer.flush();
+				fricativePrinter.flush();
 				break;
 			case "nasal":
-				try {
-					printer = new PrintWriter(outputFilenameStem + "Nasals.txt");
-				} catch (FileNotFoundException e3) {
-					System.out.println("IOException: Affricatives.txt  not openable - " + e3.getMessage());
-				}
-				printer.printf("%-10s%10s%10s", phoneme.getStartSampleNo()/sampleRate+"s", 
+				
+				nasalPrinter.printf("%-10s%10s%10s", phoneme.getStartSampleNo()/sampleRate+"s", 
 						phoneme.getEndSampleNo()/sampleRate+"s", phoneme.getName() + "\n");
-				printer.flush();
+				nasalPrinter.flush();
 				break;
 			case "vowels":
-				try {
-					printer = new PrintWriter(outputFilenameStem + "Vowels.txt");
-				} catch (FileNotFoundException e4) {
-					System.out.println("IOException: Affricatives.txt  not openable - " + e4.getMessage());
-				}
-				printer.printf("%-10s%10s%10s", phoneme.getStartSampleNo()/sampleRate+"s", 
+				
+				vowelPrinter.printf("%-10s%10s%10s", phoneme.getStartSampleNo()/sampleRate+"s", 
 						phoneme.getEndSampleNo()/sampleRate+"s", phoneme.getName() + "\n");
-				printer.flush();
+				vowelPrinter.flush();
 				break;
 			case "semivowel":
-				try {
-					printer = new PrintWriter(outputFilenameStem + "Semivowels.txt");
-				} catch (FileNotFoundException e5) {
-					System.out.println("IOException: Affricatives.txt  not openable - " + e5.getMessage());
-				}
-				printer.printf("%-10s%10s%10s", phoneme.getStartSampleNo()/sampleRate+"s", 
+				
+				semivowelPrinter.printf("%-10s%10s%10s", phoneme.getStartSampleNo()/sampleRate+"s", 
 						phoneme.getEndSampleNo()/sampleRate+"s", phoneme.getName() + "\n");
-				printer.flush();
+				semivowelPrinter.flush();
 
 				break;
 			case "stop":
-				try {
-					printer = new PrintWriter(outputFilenameStem + "Stops.txt");
-				} catch (FileNotFoundException e6) {
-					System.out.println("IOException: Affricatives.txt  not openable - " + e6.getMessage());
-				}
-				printer.printf("%-10s%10s%10s", phoneme.getStartSampleNo()/sampleRate+"s", 
+				
+				stopPrinter.printf("%-10s%10s%10s", phoneme.getStartSampleNo()/sampleRate+"s", 
 						phoneme.getEndSampleNo()/sampleRate+"s", phoneme.getName() + "\n");
-				printer.flush();
+				stopPrinter.flush();
 
 				break;
 			case "other":
-				try {
-					printer = new PrintWriter(outputFilenameStem + "Other.txt");
-				} catch (FileNotFoundException e7) {
-					System.out.println("IOException: Affricatives.txt  not openable - " + e7.getMessage());
-				}
-				printer.printf("%-10s%10s%10s", phoneme.getStartSampleNo()/sampleRate +"s", 
+				
+				otherPrinter.printf("%-10s%10s%10s", phoneme.getStartSampleNo()/sampleRate +"s", 
 						phoneme.getEndSampleNo()/sampleRate+"s", phoneme.getName() + "\n");
-				printer.flush();
+				otherPrinter.flush();
 				break;
 			}
 
 		}
 
-		printer.close();
+		if (fricativePrinter != null) fricativePrinter.close();
+		if (nasalPrinter != null) nasalPrinter.close();
+		if (semivowelPrinter != null) semivowelPrinter.close();
+		if (vowelPrinter != null) vowelPrinter.close();
+		if (stopPrinter != null) stopPrinter.close();
+		if (closurePrinter != null) closurePrinter.close();
+		if (otherPrinter != null) otherPrinter.close();
 
-		System.out.println("Total phonemes found: " + ps.size());
+		
+		System.out.println("Total phonemes found: " + phonemes.size());
 		System.out.println("Total count of Affricatives: " + TypeAffricative.getCount());
 		System.out.println("Total count of Fricatives: " + TypeFricative.getCount());
 		System.out.println("Total count of Closures: " + TypeClosure.getCount());

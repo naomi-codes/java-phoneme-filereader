@@ -81,7 +81,7 @@ public class PhonemeFileProcessor
 
 			// continue the program with a sample rate	
 			// check if the flag for a sample rate is given..
-			if ((args[0].charAt(0) == '-') && (args[1].charAt(1) == 's')) {
+			if ((args[0].charAt(0) == '-') && (args[0].charAt(1) == 's')) {
 				// ... if so assign the sample rate
 				sampleRate = Integer.parseInt(args[1]);
 			} else {
@@ -115,8 +115,9 @@ public class PhonemeFileProcessor
 		// read the specified input file
 		readFile();
 
+		Printer.setPrinters(outputFilenameStem);
 		// print the found phonemes
-		Printer.print(sampleRate, outputFilenameStem);
+		Printer.print(sampleRate);
 
 	}//main
 
@@ -130,9 +131,10 @@ public class PhonemeFileProcessor
 	private static boolean isSuitableFile(String filename) {
 
 		// extract expected 3 character suffix (after .) of filename
-		String tempSuffix = (filename.substring(filename.length() - 4));
+		String suffix = (filename.substring(filename.length() - 4)).toLowerCase();
+		
 
-		if (tempSuffix.equals(INPUT_FILE_SUFFIX))
+		if (suffix.equals(INPUT_FILE_SUFFIX))
 			return true;
 
 		return false;
