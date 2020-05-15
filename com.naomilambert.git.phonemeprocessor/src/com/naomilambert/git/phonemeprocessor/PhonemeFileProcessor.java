@@ -1,11 +1,10 @@
-package main;
+package com.naomilambert.git.phonemeprocessor;
 import java.io.*;
-import java.lang.reflect.Array;
 import java.util.*;
 
 import helper.PhonemeRecord;
 import helper.Printer;
-import phonemes.Phoneme;
+
 import phonemes.TypeAffricative;
 import phonemes.TypeClosure;
 import phonemes.TypeFricative;
@@ -13,6 +12,7 @@ import phonemes.TypeNasal;
 import phonemes.TypeOthers;
 import phonemes.TypeSemivowel;
 import phonemes.TypeStop;
+import phonemes.TypeVowel;
 
 /**
  * Write a description of class PhonemeFileProcessor  here.
@@ -35,7 +35,6 @@ public class PhonemeFileProcessor
     //file reading helper objects
     private static File inputFile = null;
     private static Scanner in = null;
-    private static PhonemeRecord myPhonemes = new PhonemeRecord();
     
     public static void main(String[] args)  throws FileNotFoundException
     {
@@ -70,7 +69,7 @@ public class PhonemeFileProcessor
     private static void continueNoSampleRate(String[] args) {
     	
      // check the suffix to check file type
-        if (checkFileType(args[0])) {
+        if (isSuitableFile(args[0])) {
             try {
                 inputFileName = args[0];
                 inputFile = new File(inputFileName);
@@ -103,7 +102,7 @@ public class PhonemeFileProcessor
 
         ;
 
-        if (checkFileType(args[2])) {
+        if (isSuitableFile(args[2])) {
             try {
                 inputFileName = args[2];
                 inputFile = new File(inputFileName);
@@ -119,7 +118,7 @@ public class PhonemeFileProcessor
         }
     }
 
-    private static boolean checkFileType(String filename) {
+    private static boolean isSuitableFile(String filename) {
     	// extract expected 3 character suffix (after .) of filename
         String tempSuffix = (filename.substring(filename.length() - 4));
         
@@ -137,106 +136,119 @@ public class PhonemeFileProcessor
     
     private static void readFile () {
 
+    	// if the scanner has been initialised...
         if (in != null) {
+        	
+        	// whilst there are more lines in the file...
             while (in.hasNextLine()){
+            	
+            	//read in the next line
                 String line = in.nextLine(); 
-                System.out.println("Line read in: " + line); 
+                //System.out.println("Line read in: " + line); 
+                
+                // phonemes in the file are delimted by spaces
                 String delims = " ";
-                String[] tokens = line.split(delims); // start sample no, end sample no, phoneme held in tokens
-                for (String s : tokens) {
-                    System.out.println(s);
-                }
-                System.out.println("Token length: " + tokens.length);
+                
+                // an array to hold the tokenised line of the file in the format
+                // [start sample no] [end sample no] [phoneme]
+                String[] tokens = line.split(delims);
+                
+                
+                //for (String s : tokens) {
+                //    System.out.println(s);
+                //}
+                
+                //System.out.println("Token length: " + tokens.length);
+                
+                // the file should consist of three strings per line
                 if (tokens.length  == 3) {
-                    boolean validLine = false;
 
-                    boolean validStartEnd = validateStartEnd(tokens[0], tokens[1]);
-                    boolean validPho = validatePho(tokens[2]);
-                    System.out.println("Booleans: " + validStartEnd + " " + validPho);
-                    if (validStartEnd && validPho){ validLine = true;}
-
-                    if (validLine){
-
-                        int startSampleNo = Integer.parseInt(tokens[0].trim());
-                        int endSampleNo = Integer.parseInt(tokens[1].trim() );
-                        String ph = tokens[2];
-                        String type = PhonemeRecord.findType(ph);
-                        
-                        /** CONTINUE FROM HERE WHEN TURNING BACK ON */
-                        //
-                        //
-                        //
-                        //
-                        //
-                        //
-                        //
-                        
-                        
-                        
-                        switch(type) {
-                        case "affricative":
-                        	break;
-                        case "closure"
+                    //boolean validStartEnd = isValidStartEnd(tokens[0], tokens[1]);
+                    //boolean validPho = isValidPhoneme(tokens[2]);
+                    //System.out.println("Booleans: " + validStartEnd + " " + validPho);
+                    
+                    
+                	// if the sample numbers given are valid and it is a recognisable phoneme
+                    if (isValidStartEnd(tokens[0], tokens[1])) {
+                    	
+                    	if (isValidPhoneme(tokens[2])) {
+                    	
+                    		//retrieve the start and end sample nos from the tokens
+                            int startSampleNo = Integer.parseInt(tokens[0].trim());
+                            int endSampleNo = Integer.parseInt(tokens[1].trim() );
+                            
+                            // retrieve the phoneme from the tokens and find its type
+                            String type = PhonemeRecord.findType(tokens[2]);
+                            
+                            
+                            switch(type) {
+                            case "affricative": 
+                            	PhonemeRecord.addPhoneme(new TypeAffricative(startSampleNo, endSampleNo, type));
+                            	break;
+                            case "closure":
+                                PhonemeRecord.addPhoneme(new TypeClosure(startSampleNo, endSampleNo, type));
+                                break;
+                            case "stop":
+                                 PhonemeRecord.addPhoneme(new TypeStop(startSampleNo, endSampleNo, type));
+                            	break;
+                            case "nasal":
+                                PhonemeRecord.addPhoneme(new TypeNasal(startSampleNo, endSampleNo, type));
+                                break;
+                            case "fricative":
+                            	PhonemeRecord.addPhoneme(new TypeFricative(startSampleNo, endSampleNo, type));
+                            	break;
+                            case "semivowel":
+                                PhonemeRecord.addPhoneme(new TypeSemivowel(startSampleNo, endSampleNo, type));
+                                break;
+                            case "vowel":
+                                 PhonemeRecord.addPhoneme(new TypeVowel(startSampleNo, endSampleNo, type));
+                                 break;
+                            case "others":
+                                PhonemeRecord.addPhoneme(new TypeOthers(startSampleNo, endSampleNo, type));
+                                break;
+                            default: 
+                            	System.out.println("No such type: " + type + " Line skipped.");
+                            }
+                        } else {
+                        	System.out.println("Invalid line of data. Line skipped.");
                         }
-                        if (type.equals("affricative")){
-                            Phoneme p = new TypeAffricative(startSampleNo, endSampleNo, ph, type);
-                            myPhonemes.addPhoneme(p);}
-                        else if (type.equals("closure")) { 
-                            Phoneme p = new TypeClosure(startSampleNo, endSampleNo, ph, type);
-                            myPhonemes.addPhoneme(p);}
-                        else if (type.equals("stop")) { 
-                            Phoneme p = new TypeStop(startSampleNo, endSampleNo, ph, type);
-                            myPhonemes.addPhoneme(p);}
-                        else if (type.equals("nasal")) {
-                            Phoneme p = new TypeNasal(startSampleNo, endSampleNo, ph, type);
-                            myPhonemes.addPhoneme(p);}
-                        else if (type.equals("fricative")) {
-                            Phoneme p = new TypeFricative(startSampleNo, endSampleNo, ph, type);
-                            myPhonemes.addPhoneme(p);}
-                        else if (type.equals("semivowel")) {
-                            Phoneme p = new TypeSemivowel(startSampleNo, endSampleNo, ph, type);
-                            myPhonemes.addPhoneme(p);}
-                        else if (type.equals("vowel")) {
-                            Phoneme p = new TypeOthers(startSampleNo, endSampleNo, ph, type);
-                            myPhonemes.addPhoneme(p);} 
-                        else {
-                            System.out.println("Data invalid. Line skipped.");
-                        }
-
-                    }
-                } else {
-                    System.out.println("Data invalid. Line skipped.");
+                    	
+                    	} else {
+                    		System.out.println("Invalid phoneme: " + tokens[2]);
+                    	}
+                    } else {
+                    	System.out.println("Invalid sample nos: " + tokens[0] + ", " + tokens[1]);
+                    }   		
                 }
-            }
-            in.close();
 
+            in.close();
+        } else {
+        	System.out.println("No such file.");
+        	doShutdown();
         }
     }
 
     private static boolean isValidStartEnd(String st, String end) {
 
-        boolean validInput = false;
-
         try {
             Integer.valueOf(st);
             Integer.valueOf(end);
             
-            validInput = true;
+            return true;
         } catch (NumberFormatException e) {
             System.out.println("Data invalid. Line skipped.");
         }
 
-        return validInput;
+        return false;
     }
 
     private static boolean isValidPhoneme(String testph) {
-        boolean typeFound = false;
 
         if (testph.matches("^[a-z]+$")){
             String t = PhonemeRecord.findType(testph);
-            if (!(t.equals("not found"))) typeFound = true;  
+            if (!(t.equals("not found"))) return true;  
         }
-        return typeFound;
+        return false;
     }
 
     public static void usage(){

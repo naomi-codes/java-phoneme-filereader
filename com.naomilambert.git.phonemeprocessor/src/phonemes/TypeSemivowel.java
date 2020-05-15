@@ -8,10 +8,13 @@ package phonemes;
  */
 public class TypeSemivowel extends Phoneme
 {
+	private static String NAME = "Semivowel";
+	//private static String NAME = "Se";
+	
     private static int count = 0;
 
-    public TypeSemivowel (int s, int e, String n,String t){
-        super(s,e,n,t);
+    public TypeSemivowel (int s, int e, String t){
+        super(s,e,NAME,t);
         count++;
     }
 

@@ -8,9 +8,13 @@ package phonemes;
  */
 public class TypeVowel extends Phoneme
 {
+	
+	private static String NAME = "Vowel";
+	//private static String NAME = "Vow";
+	
     private static int count = 0;
-    public TypeVowel (int s, int e, String n, String t){
-        super(s,e,n,t);
+    public TypeVowel (int s, int e, String t){
+        super(s,e,NAME,t);
         count++;
     }
 

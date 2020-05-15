@@ -8,10 +8,15 @@ package phonemes;
  */
 public class TypeClosure extends Phoneme
 {
+	
+	private static String NAME = "Closure";
+	
+	//private static String NAME = "Clo";
+	
     private static int count = 0;
 
-    public TypeClosure (int s, int e, String n, String t){
-        super(s,e,n,t);
+    public TypeClosure (int s, int e, String t){
+        super(s,e,NAME,t);
         count++;
     }
 

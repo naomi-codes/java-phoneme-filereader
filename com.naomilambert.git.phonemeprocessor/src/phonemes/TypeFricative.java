@@ -8,9 +8,12 @@ package phonemes;
  */
 public class TypeFricative extends Phoneme
 {
+	private static String NAME = "Fricative";
+	//private static String NAME = "Fri";
+	
     private static int count = 0;
-    public TypeFricative (int s, int e, String n, String t){
-        super(s,e,n,t); 
+    public TypeFricative (int s, int e, String t){
+        super(s,e,NAME,t); 
         count++;
     }
 

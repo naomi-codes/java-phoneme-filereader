@@ -8,10 +8,13 @@ package phonemes;
  */
 public class TypeStop extends Phoneme
 {
+	private static String NAME = "Stop";
+	//private static String NAME = "Sto";
+	
     private static int count = 0;
 
-    public TypeStop (int s, int e, String n, String t){
-        super(s,e,n,t);
+    public TypeStop (int s, int e, String t){
+        super(s,e,NAME,t);
         count++;
     }
 

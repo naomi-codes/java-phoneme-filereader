@@ -8,9 +8,12 @@ package phonemes;
  */
 public class TypeOthers extends Phoneme
 {
+	private static String NAME = "Others";
+	//private static String NAME = "Oth";
+	
     private static int count = 0;
-    public TypeOthers (int s, int e, String n, String t){
-        super(s,e,n,t);
+    public TypeOthers (int s, int e, String t){
+        super(s,e,NAME,t);
         count++;
     }
 
