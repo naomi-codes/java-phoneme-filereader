@@ -25,10 +25,6 @@ import phonemes.TypeVowel;
  * @author Naomi Lambert
  * @version 15 May 2020
  */
-/**
- * @author zee
- *
- */
 public class PhonemeFileProcessor
 {
 
@@ -154,9 +150,8 @@ public class PhonemeFileProcessor
 
 	/**
 	 * 
-	 * Executes main function of the program
-	 * 
 	 * Reads in phonemes to the scanner initiliased with the the input
+	 * Reads in phonemes to the scanner initialised with the the input
 	 * file as a parameter. For each phoneme read in a new object is created 
 	 * which stores the start and end sample numbers and the phoneme name.
 	 */
@@ -244,11 +239,20 @@ public class PhonemeFileProcessor
 		}
 	}
 
-	private static boolean isValidStartEnd(String st, String end) {
+	
+	/**
+	 * 
+	 * Checks whether or not the sample numbers read in from
+	 * a line of the input file are valid
+	 * @param startNo
+	 * @param endNo
+	 * @return
+	 */
+	private static boolean isValidStartEnd(String startNo, String endNo) {
 
 		try {
-			Integer.valueOf(st);
-			Integer.valueOf(end);
+			Integer.valueOf(startNo);
+			Integer.valueOf(endNo);
 			return true;
 
 		} catch (NumberFormatException e) {
@@ -258,13 +262,22 @@ public class PhonemeFileProcessor
 		return false;
 	}
 
+	/**
+	 * Checks whether or not the phoneme read from the last line is
+	 * recognised
+	 * @param type
+	 * @return
+	 */
 	private static boolean isValidPhoneme(String type) {
 		if (!(PhonemeRecord.findType(type).equals("not found"))) return true;  
 		return false;
 	}
 
+	/**
+	 * Output command line usage
+	 */
 	public static void usage(){
-		System.out.println("Usage: java Command [-s samplerate] input_file output_file_stem");
+		System.out.println("Usage: java Command [-s] [samplerate] input_file output_file_stem");
 	}//usage
 }
 

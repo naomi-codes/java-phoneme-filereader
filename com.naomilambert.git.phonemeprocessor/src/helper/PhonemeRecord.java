@@ -1,6 +1,5 @@
 package helper;
 
-import java.util.ArrayList;
 import java.util.List;
 
 // package imports
@@ -8,9 +7,11 @@ import phonemes.Phoneme;
 
 
 /**
- * Class to hold details of existing known (to the program) phonemes including arrays of various groups
- * of phonemes, a list of phonemes found in the file read. 
- * Gives access to the list of found phonemes for reference
+ * Class to hold details of existing known (to the program) phonemes 
+ * including arrays of various groups of phonemes, a list of phonemes 
+ * found in the file read. 
+ * Gives access to the list of found phonemes for printing and adding 
+ * the list
  * Contains the methods needed to discern phoneme type.
  * 
  * @author Zee 
@@ -20,26 +21,25 @@ public class PhonemeRecord
 {
     private static List<Phoneme> foundPhonemes;
 
-    private static String[] affricatives = {"jh", "ch"};
-    private static String[] closures = {"bcl", "dcl", "gcl", "pcl", "tck", "kcl", "tcl"};
-    private static String[] fricatives = {"s", "sh", "z", "zh", "f", "th", "v", "dh"};
-    private static String[] semivowels = {"l", "r", "w", "y", "hh", "hv", "el"};
-    private static String[] nasals = {"m", "n", "ng", "em", "en", "eng", "nx"};
-    private static String[] stops = {"b", "d", "g", "p", "t", "k", "dx", "q"};
-    private static String[] others = {"pau", "epi", "h#", "1", "2"};
-    private static String[] vowels = {"iy", "ih", "eh", "ey", "ae", "aa", "aw", "ay", "ah", "ao", "oy", "ow", 
+    private static final String[] AFFRICATIVES = {"jh", "ch"};
+    private static final String[] CLOSURES = {"bcl", "dcl", "gcl", "pcl", "tck", "kcl", "tcl"};
+    private static final String[] FRICATIVES = {"s", "sh", "z", "zh", "f", "th", "v", "dh"};
+    private static final String[] SEMIVOWELS = {"l", "r", "w", "y", "hh", "hv", "el"};
+    private static final String[] NASALS = {"m", "n", "ng", "em", "en", "eng", "nx"};
+    private static final String[] STOPS = {"b", "d", "g", "p", "t", "k", "dx", "q"};
+    private static final String[] OTHERS = {"pau", "epi", "h#", "1", "2"};
+    private static final String[] VOWELS = {"iy", "ih", "eh", "ey", "ae", "aa", "aw", "ay", "ah", "ao", "oy", "ow", 
             "uh", "uw", "ux", "er", "ax", "ix", "axr", "ax-r"};
 
-    /**
-     * Constructor for objects of class PhonemeRecord
-     */
-    public PhonemeRecord()
-    {
-        foundPhonemes = new ArrayList<Phoneme>();
-    } // constructor
 
-    public static void addPhoneme (Phoneme p) {
-        foundPhonemes.add(p);
+    /**
+     * Adds a previously validated phoneme to the list of all 
+     * found phonemes
+     * @param p
+     */
+    public static void addPhoneme (Phoneme phoneme) {
+        foundPhonemes.add(phoneme);
+
     }//addPhoneme
 
     public static List<Phoneme> getPhonemes () {
