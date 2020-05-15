@@ -39,7 +39,7 @@ public class Printer
      * Constructor for objects of class Printer
      */
 
-    public Printer(String stem) {
+    public static void setPrinters(String stem) {
 
             try {
 				outAff = new PrintWriter(stem + "Affricatives.txt");
