@@ -7,11 +7,7 @@ to files including their sample locations.
 
 ## Installation
 
-Use the package manager [pip](https://pip.pypa.io/en/stable/) to install foobar.
-
-```bash
-pip install foobar
-```
+Download the zip file and place in your desired location on your hard drive. Unzip the file to deploy.
 
 ## Usage
 
