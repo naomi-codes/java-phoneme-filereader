@@ -11,12 +11,8 @@ Download the zip file and place in your desired location on your hard drive. Unz
 
 ## Usage
 
-```python
-import foobar
-
-foobar.pluralize('word') # returns 'words'
-foobar.pluralize('goose') # returns 'geese'
-foobar.singularize('phenomena') # returns 'phenomenon'
+```
+[-s] [sampleRate] inputfile.phn outputfile.phn
 ```
 
 ## Contributing
