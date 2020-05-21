@@ -12,7 +12,7 @@ Download the zip file and place in your desired location on your hard drive. Unz
 ## Usage
 
 ```
-[-s] [sampleRate] inputfile.phn outputfile.phn
+[-s] [sampleRate] input_filename outputfile_filename_stem
 ```
 
 ## Contributing
