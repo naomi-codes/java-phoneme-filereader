@@ -18,15 +18,14 @@ To use the file reader:
 ```
 
 ## Contributing to <project_name>
-<!--- If your README is long or you have some specific process or steps you want contributors to follow, consider creating a separate CONTRIBUTING.md file--->
 
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
-To contribute to <project_name>, follow these steps:
+To contribute to this project, follow these steps:
 
 1. Fork this repository.
 2. Create a branch: `git checkout -b <username>`.
 3. Make your changes and commit them: `git commit -m '<commit_message>'`
-4. Push to the original branch: `git push origin <project_name>/<location>`
+4. Push to the original branch: `git push origin <java-phoneme-filereader>/<location>`
 5. Create the pull request.
 
 Alternatively see the GitHub documentation on [creating a pull request](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request).
